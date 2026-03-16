@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:hologram.page)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:www.youtube.com)",
+      "WebFetch(domain:elixirforum.com)",
+      "WebFetch(domain:code.visualstudio.com)"
+    ]
+  }
+}

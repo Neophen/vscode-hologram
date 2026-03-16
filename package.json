@@ -1,0 +1,80 @@
+{
+  "name": "vscode-hologram",
+  "displayName": "Hologram",
+  "description": "Syntax highlighting and Go to Definition for the Hologram framework template language",
+  "version": "0.2.0",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:hologram",
+    "onLanguage:elixir"
+  ],
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "contributes": {
+    "configuration": {
+      "title": "Hologram",
+      "properties": {
+        "hologram.defaultJumpTarget": {
+          "type": "string",
+          "default": "template",
+          "enum": ["template", "init", "module"],
+          "enumDescriptions": [
+            "Jump to the def template function",
+            "Jump to the def init function",
+            "Jump to the defmodule line"
+          ],
+          "description": "Default jump target when Cmd+clicking a component tag"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "hologram",
+        "aliases": [
+          "Hologram",
+          "hologram"
+        ],
+        "extensions": [
+          ".holo"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "hologram",
+        "scopeName": "source.hologram",
+        "path": "./syntaxes/hologram.tmLanguage.json",
+        "embeddedLanguages": {
+          "source.elixir": "elixir",
+          "source.css": "css",
+          "source.js": "javascript"
+        }
+      },
+      {
+        "scopeName": "source.elixir.hologram",
+        "path": "./syntaxes/elixir-hologram.tmLanguage.json",
+        "injectTo": [
+          "source.elixir"
+        ],
+        "embeddedLanguages": {
+          "source.hologram": "hologram"
+        }
+      }
+    ]
+  }
+}

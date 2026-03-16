@@ -1,0 +1,83 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Elixir Hologram",
+  "injectionSelector": "L:source.elixir -comment -string",
+  "scopeName": "source.elixir.hologram",
+  "patterns": [
+    {
+      "comment": "~HOLO sigil with heredoc triple quotes",
+      "name": "text.html.hologram",
+      "begin": "(~HOLO\"\"\")",
+      "beginCaptures": {
+        "1": { "name": "string.quoted.double.heredoc.elixir" }
+      },
+      "end": "(\"\"\"[a-z]*)",
+      "endCaptures": {
+        "1": { "name": "string.quoted.double.heredoc.elixir" }
+      },
+      "patterns": [
+        { "include": "source.hologram" }
+      ]
+    },
+    {
+      "comment": "~HOLO sigil with double quotes",
+      "name": "text.html.hologram",
+      "begin": "(~HOLO\")",
+      "beginCaptures": {
+        "1": { "name": "string.quoted.double.elixir" }
+      },
+      "end": "(\"[a-z]*)",
+      "endCaptures": {
+        "1": { "name": "string.quoted.double.elixir" }
+      },
+      "patterns": [
+        { "include": "source.hologram" }
+      ]
+    },
+    {
+      "comment": "~HOLO sigil with square brackets",
+      "name": "text.html.hologram",
+      "begin": "(~HOLO\\[)",
+      "beginCaptures": {
+        "1": { "name": "string.quoted.other.elixir" }
+      },
+      "end": "(\\][a-z]*)",
+      "endCaptures": {
+        "1": { "name": "string.quoted.other.elixir" }
+      },
+      "patterns": [
+        { "include": "source.hologram" }
+      ]
+    },
+    {
+      "comment": "~HOLO sigil with parentheses",
+      "name": "text.html.hologram",
+      "begin": "(~HOLO\\()",
+      "beginCaptures": {
+        "1": { "name": "string.quoted.other.elixir" }
+      },
+      "end": "(\\)[a-z]*)",
+      "endCaptures": {
+        "1": { "name": "string.quoted.other.elixir" }
+      },
+      "patterns": [
+        { "include": "source.hologram" }
+      ]
+    },
+    {
+      "comment": "~HOLO sigil with curly braces (limited: nested braces inside will break matching)",
+      "name": "text.html.hologram",
+      "begin": "(~HOLO\\{)",
+      "beginCaptures": {
+        "1": { "name": "string.quoted.other.elixir" }
+      },
+      "end": "(\\}[a-z]*)",
+      "endCaptures": {
+        "1": { "name": "string.quoted.other.elixir" }
+      },
+      "patterns": [
+        { "include": "source.hologram" }
+      ]
+    }
+  ]
+}

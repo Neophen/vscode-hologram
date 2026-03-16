@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<!-- This is an HTML comment -->
+
+<!-- Basic HTML tags -->
+<div class="container" id="main">
+  <h1>Welcome to Hologram</h1>
+  <p>This is a paragraph with <strong>bold</strong> and <em>italic</em> text.</p>
+</div>
+
+<!-- Interpolation -->
+<p>{@title}</p>
+<p>{2 + 2}</p>
+<p>{String.upcase("hello")}</p>
+
+<!-- Variables in attributes -->
+<div class={@dynamic_class}>
+  <input type="text" value={@name} />
+</div>
+
+<!-- If/else control flow -->
+{%if @logged_in}
+  <p>Welcome back, {@username}!</p>
+{%else}
+  <p>Please log in.</p>
+{/if}
+
+<!-- Else if -->
+{%if @role == :admin}
+  <p>Admin panel</p>
+{%else if @role == :moderator}
+  <p>Moderator panel</p>
+{%else}
+  <p>User panel</p>
+{/if}
+
+<!-- For loops -->
+<ul>
+  {%for item <- @items}
+    <li>{item.name} - {item.price}</li>
+  {/for}
+</ul>
+
+<!-- Raw block (no interpolation inside) -->
+{%raw}
+  <p>This {expression} is not interpolated</p>
+  <p>{%if true} This is literal text, not a control block {/if}</p>
+{/raw}
+
+<!-- Components -->
+<Card title="Hello" subtitle={@sub}>
+  <p>Card content here</p>
+</Card>
+
+<MyApp.Components.Button label="Click me" disabled={@is_disabled} />
+
+<Hologram.UI.Runtime />
+
+<!-- Slot usage -->
+<Layout>
+  <slot />
+</Layout>
+
+<!-- Event bindings -->
+<button $click="increment">+1</button>
+<button $click={:set_count, value: 0}>Reset</button>
+<button $click={action: :save, target: "page", params: %{id: @item_id}}>Save</button>
+
+<input type="text" $change="update_name" $blur="validate_name" $focus="clear_error" />
+<form $submit="handle_submit">
+  <input type="text" />
+  <button type="submit">Submit</button>
+</form>
+
+<!-- Pointer events -->
+<div $pointer_down="start_drag" $pointer_up="end_drag" $pointer_move="on_move">
+  Drag me
+</div>
+
+<!-- Escaped braces -->
+<p>Use \{ and \} for literal braces</p>
+
+<!-- HTML entities -->
+<p>&amp; &lt; &gt; &quot; &#123; &#x1F600;</p>
+
+<!-- Style tag with CSS -->
+<style>
+  .container {
+    display: flex;
+    color: #333;
+    font-size: 16px;
+  }
+  .container h1 {
+    margin-bottom: 1rem;
+  }
+</style>
+
+<!-- Script tag with JS -->
+<script>
+  function greet(name) {
+    console.log("Hello, " + name);
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    greet("World");
+  });
+</script>
+
+<!-- Self-closing tags -->
+<br />
+<hr />
+<img src={@image_url} alt="Photo" />
+<link rel="stylesheet" href="/assets/app.css" />
