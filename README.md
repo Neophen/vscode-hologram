@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="Hologram" width="128" />
+  <img src="assets/logo.png" alt="Hologram" width="128" />
 </p>
 
 # Hologram for VS Code
