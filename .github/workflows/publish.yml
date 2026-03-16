@@ -23,7 +23,10 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
+      - name: Package VSIX
+        run: npx @vscode/vsce package
+
       - name: Publish to Open VSX
-        run: npx ovsx publish --no-update-package-json
+        run: npx ovsx publish *.vsix -p $OVSX_PAT
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
