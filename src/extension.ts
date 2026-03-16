@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { HologramDefinitionProvider } from './definitionProvider';
+import { HologramEventCompletionProvider } from './eventCompletionProvider';
 
 export function activate(context: vscode.ExtensionContext) {
   const selector: vscode.DocumentSelector = [
@@ -11,6 +12,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerDefinitionProvider(
       selector,
       new HologramDefinitionProvider()
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.languages.registerCompletionItemProvider(
+      selector,
+      new HologramEventCompletionProvider(),
+      '$', '='
     )
   );
 }
