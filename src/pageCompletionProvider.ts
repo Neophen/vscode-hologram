@@ -242,10 +242,7 @@ export class PageCompletionProvider implements vscode.CompletionItemProvider {
 
       for (const state of members.stateKeys) {
         if (varFields.has(state.name)) continue;
-        let fields = state.fields;
-        if (fields.length === 0) {
-          fields = this.scanTemplateFieldUsage(document, moduleRange, state.name);
-        }
+        const fields = this.scanTemplateFieldUsage(document, moduleRange, state.name);
         if (fields.length > 0) {
           varFields.set(state.name, fields);
         }

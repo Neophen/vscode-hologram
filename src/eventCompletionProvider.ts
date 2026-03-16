@@ -45,13 +45,11 @@ interface CommandInfo {
 export interface PropInfo {
   name: string;
   type: string;
-  fields: string[];
 }
 
 export interface StateInfo {
   name: string;
   source: 'put_state' | 'init';
-  fields: string[];
 }
 
 export interface ModuleMembers {
@@ -81,7 +79,7 @@ export function scanModuleMembers(
     const propMatch = line.match(/^\s*prop[\s(]+:(\w+)(?:\s*,\s*:?(\w[\w.]*))?/);
     if (propMatch) {
       const propType = propMatch[2] || 'any';
-      props.push({ name: propMatch[1], type: propType, fields: [] });
+      props.push({ name: propMatch[1], type: propType });
       continue;
     }
 
@@ -109,56 +107,35 @@ export function scanModuleMembers(
       continue;
     }
 
-    // put_state(component, :key, value) — track the variable to infer fields
-    const putStateAtom3 = line.match(/put_state\s*\([^,]+,\s*:(\w+)\s*,\s*(\w+)/);
-    if (putStateAtom3) {
-      const stateKey = putStateAtom3[1];
-      const varName = putStateAtom3[2];
-      const fields = inferVariableFields(lines, i, moduleRange, varName);
-      if (!stateKeysSet.has(stateKey)) {
-        stateKeysSet.set(stateKey, { name: stateKey, source: 'put_state', fields });
-      }
+    // put_state(component, :key, value) or |> put_state(:key, value)
+    const putStateAtom = line.match(/put_state\s*\([^,]*,\s*:(\w+)/);
+    if (putStateAtom && !stateKeysSet.has(putStateAtom[1])) {
+      stateKeysSet.set(putStateAtom[1], { name: putStateAtom[1], source: 'put_state' });
     }
-    // |> put_state(:key, value) — piped form
-    const putStatePiped3 = line.match(/put_state\s*\(\s*:(\w+)\s*,\s*(\w+)/);
-    if (putStatePiped3 && !putStateAtom3) {
-      const stateKey = putStatePiped3[1];
-      const varName = putStatePiped3[2];
-      const fields = inferVariableFields(lines, i, moduleRange, varName);
-      if (!stateKeysSet.has(stateKey)) {
-        stateKeysSet.set(stateKey, { name: stateKey, source: 'put_state', fields });
-      }
-    }
-
-    // put_state(component, :key, %{...}) — inline map literal
-    const putStateInlineMap = line.match(/put_state\s*\([^,]+,\s*:(\w+)\s*,\s*%\{([^}]+)\}/);
-    if (putStateInlineMap) {
-      const stateKey = putStateInlineMap[1];
-      const fields = extractMapKeys(putStateInlineMap[2]);
-      if (!stateKeysSet.has(stateKey)) {
-        stateKeysSet.set(stateKey, { name: stateKey, source: 'put_state', fields });
-      }
+    const putStatePiped = line.match(/put_state\s*\(\s*:(\w+)/);
+    if (putStatePiped && !putStateAtom && !stateKeysSet.has(putStatePiped[1])) {
+      stateKeysSet.set(putStatePiped[1], { name: putStatePiped[1], source: 'put_state' });
     }
 
     // put_state(component, key: value, key2: value2) — keyword list (flat state)
     const putStateKw = /put_state\s*\([^,]+,\s*((?:\w+:\s*[^,)]+,?\s*)+)/;
     const kwMatch = line.match(putStateKw);
-    if (kwMatch && !putStateAtom3 && !putStateInlineMap) {
+    if (kwMatch && !putStateAtom) {
       const kwPairs = kwMatch[1].matchAll(/(\w+):\s*/g);
       for (const kw of kwPairs) {
         if (!stateKeysSet.has(kw[1])) {
-          stateKeysSet.set(kw[1], { name: kw[1], source: 'put_state', fields: [] });
+          stateKeysSet.set(kw[1], { name: kw[1], source: 'put_state' });
         }
       }
     }
 
     // put_state(component, %{key: value}) — map of flat state keys
-    const putStateMap = line.match(/put_state\s*\([^,]+,\s*%\{([^}]+)\}\s*\)/);
-    if (putStateMap && !putStateInlineMap) {
+    const putStateMap = line.match(/put_state\s*\([^,]+,\s*%\{([^}]+)\}/);
+    if (putStateMap) {
       const mapPairs = putStateMap[1].matchAll(/(\w+):\s*/g);
       for (const mp of mapPairs) {
         if (!stateKeysSet.has(mp[1])) {
-          stateKeysSet.set(mp[1], { name: mp[1], source: 'put_state', fields: [] });
+          stateKeysSet.set(mp[1], { name: mp[1], source: 'put_state' });
         }
       }
     }
@@ -223,60 +200,6 @@ function extractParamKeys(body: string, paramsVar: string): string[] {
   return keys;
 }
 
-function extractMapKeys(mapContent: string): string[] {
-  const keys: string[] = [];
-  const matches = mapContent.matchAll(/(\w+):\s*/g);
-  for (const m of matches) {
-    if (!keys.includes(m[1])) {
-      keys.push(m[1]);
-    }
-  }
-  return keys;
-}
-
-function inferVariableFields(
-  lines: string[],
-  putStateLine: number,
-  moduleRange: { start: number; end: number },
-  varName: string
-): string[] {
-  for (let i = putStateLine; i >= moduleRange.start; i--) {
-    const line = lines[i];
-    if (!line) continue;
-
-    const mapAssign = new RegExp(`\\b${varName}\\s*=\\s*%\\{`);
-    if (mapAssign.test(line)) {
-      let braceDepth = 0;
-      let collecting = false;
-      let mapContent = '';
-
-      for (let j = i; j <= moduleRange.end; j++) {
-        const l = lines[j];
-        if (!l) continue;
-
-        for (const ch of l) {
-          if (ch === '{') {
-            if (collecting || (j === i && l.indexOf('%{') !== -1)) {
-              collecting = true;
-            }
-            if (collecting) braceDepth++;
-          } else if (ch === '}' && collecting) {
-            braceDepth--;
-            if (braceDepth === 0) {
-              return extractMapKeys(mapContent);
-            }
-          } else if (collecting && braceDepth > 0) {
-            mapContent += ch;
-          }
-        }
-        if (collecting) mapContent += '\n';
-      }
-    }
-  }
-
-  return [];
-}
-
 export async function resolveModuleFields(
   moduleName: string,
   document: vscode.TextDocument
@@ -334,21 +257,6 @@ export async function resolveModuleFields(
 
     if (/^\s*timestamps\(\)/m.test(fileText)) {
       fields.push('inserted_at', 'updated_at');
-    }
-
-    const defstructList = fileText.match(/defstruct\s+\[([^\]]+)\]/);
-    if (defstructList) {
-      const structFields = defstructList[1].matchAll(/:(\w+)/g);
-      for (const sf of structFields) {
-        fields.push(sf[1]);
-      }
-    }
-    const defstructKw = fileText.match(/defstruct\s+((?:\w+:\s*[^,\n]+,?\s*)+)/);
-    if (defstructKw) {
-      const kwFields = defstructKw[1].matchAll(/(\w+):\s*/g);
-      for (const kf of kwFields) {
-        fields.push(kf[1]);
-      }
     }
 
     if (fields.length > 0) return fields;
@@ -743,22 +651,11 @@ export class HologramEventCompletionProvider implements vscode.CompletionItemPro
     if (prop) {
       source = `Prop (${prop.type})`;
       if (prop.type !== 'any' && /^[A-Z]/.test(prop.type)) {
-        // Try the index first for field resolution
         const fullName = resolveComponentName(prop.type, document) ?? prop.type;
         fields = this.index.getModuleFields(fullName);
         if (fields.length === 0) {
-          fields = prop.fields.length > 0 ? prop.fields : await resolveModuleFields(prop.type, document);
+          fields = await resolveModuleFields(prop.type, document);
         }
-      } else {
-        fields = prop.fields;
-      }
-    }
-
-    if (fields.length === 0) {
-      const state = members.stateKeys.find(s => s.name === varName);
-      if (state) {
-        source = 'State';
-        fields = state.fields;
       }
     }
 

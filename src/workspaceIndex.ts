@@ -269,26 +269,6 @@ export class WorkspaceIndex implements vscode.Disposable {
           continue;
         }
 
-        // defstruct [:field1, :field2]
-        const defstructList = line.match(/defstruct\s+\[([^\]]+)\]/);
-        if (defstructList) {
-          const structFields = defstructList[1].matchAll(/:(\w+)/g);
-          for (const sf of structFields) {
-            fields.push(sf[1]);
-          }
-          continue;
-        }
-
-        // defstruct field1: default, field2: default
-        const defstructKw = line.match(/defstruct\s+((?:\w+:\s*[^,\n]+,?\s*)+)/);
-        if (defstructKw && !defstructList) {
-          const kwFields = defstructKw[1].matchAll(/(\w+):\s*/g);
-          for (const kf of kwFields) {
-            fields.push(kf[1]);
-          }
-          continue;
-        }
-
         // def template
         if (/^\s*def\s+template\b/.test(line)) {
           templateLine = i;

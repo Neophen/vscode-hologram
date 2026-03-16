@@ -76,37 +76,27 @@ export class FieldDiagnosticsProvider implements vscode.Disposable {
     const members = scanModuleMembers(document, moduleRange);
 
     this.outputChannel.appendLine(`  Props: ${members.props.map(p => `${p.name}(${p.type})`).join(', ') || 'none'}`);
-    this.outputChannel.appendLine(`  State keys: ${members.stateKeys.map(s => `${s.name}[${s.fields.join(',')}]`).join(', ') || 'none'}`);
+    this.outputChannel.appendLine(`  State keys: ${members.stateKeys.map(s => s.name).join(', ') || 'none'}`);
 
     // Build a map of known fields per variable
     const fieldMap = new Map<string, { fields: string[]; source: string }>();
 
-    // Props with module types — use index first, fallback to resolveModuleFields
+    // Props with module types (Ash resources) — use index first, fallback to resolveModuleFields
     for (const prop of members.props) {
       if (prop.type !== 'any' && /^[A-Z]/.test(prop.type)) {
         this.outputChannel.appendLine(`  Resolving fields for prop "${prop.name}" type "${prop.type}"...`);
 
-        // Try index first
         const fullName = resolveComponentName(prop.type, document) ?? prop.type;
         let fields = this.index.getModuleFields(fullName);
 
         if (fields.length === 0) {
-          fields = prop.fields.length > 0
-            ? prop.fields
-            : await resolveModuleFields(prop.type, document);
+          fields = await resolveModuleFields(prop.type, document);
         }
 
         this.outputChannel.appendLine(`  Resolved ${fields.length} fields: ${fields.join(', ')}`);
         if (fields.length > 0) {
           fieldMap.set(prop.name, { fields, source: `Prop (${prop.type})` });
         }
-      }
-    }
-
-    // State keys with known fields
-    for (const state of members.stateKeys) {
-      if (state.fields.length > 0 && !fieldMap.has(state.name)) {
-        fieldMap.set(state.name, { fields: state.fields, source: 'State' });
       }
     }
 

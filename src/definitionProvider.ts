@@ -234,15 +234,6 @@ export class HologramDefinitionProvider implements vscode.DefinitionProvider {
       }
     }
 
-    // Regular struct
-    const structPattern = new RegExp(`defstruct\\s+.*:${escapedField}\\b`, 'm');
-    const structMatch = structPattern.exec(fileText);
-    if (structMatch) {
-      const pos = doc.positionAt(structMatch.index);
-      this.outputChannel.appendLine(`Found struct field at ${fileUri.fsPath}:${pos.line}`);
-      return new vscode.Location(fileUri, pos);
-    }
-
     this.outputChannel.appendLine(`Field "${fieldName}" not found in ${fileUri.fsPath}`);
     return undefined;
   }
