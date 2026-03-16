@@ -52,6 +52,7 @@ Rules:
 - Use bold for feature names
 - Do NOT include the "# Changelog" header
 - Do NOT include previous versions
+- Do NOT use brackets around version numbers (use "## ${version}" not "## [${version}]")
 - Output ONLY the markdown for this version`;
 
 try {
