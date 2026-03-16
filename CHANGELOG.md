@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.4
+
+- Added extension icon to VS Code Marketplace and Open VSX
+- Updated extension description
+- Added version/installs/license badges to README
+
+## 0.4.3
+
+- Fixed `.vscodeignore` to exclude `.claude/`, `.github/`, `.tool-versions` from VSIX
+- Updated GitHub Actions to Node LTS and actions v5
+- Fixed Open VSX publish command
+
 ## 0.3.0
 
 ### New Features

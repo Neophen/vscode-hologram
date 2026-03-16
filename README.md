@@ -4,6 +4,10 @@
 
 # Hologram for VS Code
 
+[![Version](https://img.shields.io/visual-studio-marketplace/v/MDIS.vscode-hologram?label=version)](https://marketplace.visualstudio.com/items?itemName=MDIS.vscode-hologram)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/MDIS.vscode-hologram)](https://marketplace.visualstudio.com/items?itemName=MDIS.vscode-hologram)
+[![License](https://img.shields.io/github/license/Neophen/vscode-hologram)](LICENSE)
+
 Syntax highlighting, intelligent autocomplete, diagnostics, and Go to Definition for the [Hologram](https://hologram.page/) framework.
 
 ## Install
