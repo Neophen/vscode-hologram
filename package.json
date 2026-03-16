@@ -2,7 +2,7 @@
   "name": "vscode-hologram",
   "displayName": "Hologram",
   "description": "Syntax highlighting and Go to Definition for the Hologram framework template language",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "MDIS",
   "license": "MIT",
   "repository": {
@@ -39,7 +39,11 @@
         "hologram.defaultJumpTarget": {
           "type": "string",
           "default": "template",
-          "enum": ["template", "init", "module"],
+          "enum": [
+            "template",
+            "init",
+            "module"
+          ],
           "enumDescriptions": [
             "Jump to the def template function",
             "Jump to the def init function",
@@ -61,24 +65,71 @@
                 "description": "Description shown in the completion popup"
               }
             },
-            "required": ["name"]
+            "required": [
+              "name"
+            ]
           },
           "default": [
-            { "name": "$click", "description": "Triggered when an element is clicked" },
-            { "name": "$change", "description": "Triggered when the value of an input element changes" },
-            { "name": "$submit", "description": "Triggered when a form is submitted" },
-            { "name": "$select", "description": "Triggered when text is selected in an input or textarea" },
-            { "name": "$blur", "description": "Triggered when an element loses focus" },
-            { "name": "$focus", "description": "Triggered when an element receives focus" },
-            { "name": "$mouse_move", "description": "Triggered when the mouse cursor moves over an element" },
-            { "name": "$pointer_down", "description": "Triggered when a pointer is pressed down on an element" },
-            { "name": "$pointer_up", "description": "Triggered when a pointer is released from an element" },
-            { "name": "$pointer_move", "description": "Triggered when a pointer moves while over an element" },
-            { "name": "$pointer_cancel", "description": "Triggered when a pointer event is cancelled" },
-            { "name": "$transition_end", "description": "Triggered when a CSS transition has finished" },
-            { "name": "$transition_start", "description": "Triggered when a CSS transition has started" },
-            { "name": "$transition_run", "description": "Triggered when a CSS transition is created" },
-            { "name": "$transition_cancel", "description": "Triggered when a CSS transition is cancelled" }
+            {
+              "name": "$click",
+              "description": "Triggered when an element is clicked"
+            },
+            {
+              "name": "$change",
+              "description": "Triggered when the value of an input element changes"
+            },
+            {
+              "name": "$submit",
+              "description": "Triggered when a form is submitted"
+            },
+            {
+              "name": "$select",
+              "description": "Triggered when text is selected in an input or textarea"
+            },
+            {
+              "name": "$blur",
+              "description": "Triggered when an element loses focus"
+            },
+            {
+              "name": "$focus",
+              "description": "Triggered when an element receives focus"
+            },
+            {
+              "name": "$mouse_move",
+              "description": "Triggered when the mouse cursor moves over an element"
+            },
+            {
+              "name": "$pointer_down",
+              "description": "Triggered when a pointer is pressed down on an element"
+            },
+            {
+              "name": "$pointer_up",
+              "description": "Triggered when a pointer is released from an element"
+            },
+            {
+              "name": "$pointer_move",
+              "description": "Triggered when a pointer moves while over an element"
+            },
+            {
+              "name": "$pointer_cancel",
+              "description": "Triggered when a pointer event is cancelled"
+            },
+            {
+              "name": "$transition_end",
+              "description": "Triggered when a CSS transition has finished"
+            },
+            {
+              "name": "$transition_start",
+              "description": "Triggered when a CSS transition has started"
+            },
+            {
+              "name": "$transition_run",
+              "description": "Triggered when a CSS transition is created"
+            },
+            {
+              "name": "$transition_cancel",
+              "description": "Triggered when a CSS transition is cancelled"
+            }
           ],
           "description": "Hologram event types shown in autocomplete. Order determines sort priority. Add, remove, or reorder to match your usage."
         },
@@ -96,15 +147,28 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "name": { "type": "string" },
-                    "type": { "type": "string", "default": "any" },
-                    "required": { "type": "boolean", "default": false }
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "default": "any"
+                    },
+                    "required": {
+                      "type": "boolean",
+                      "default": false
+                    }
                   },
-                  "required": ["name"]
+                  "required": [
+                    "name"
+                  ]
                 }
               }
             },
-            "required": ["module", "props"]
+            "required": [
+              "module",
+              "props"
+            ]
           },
           "default": [],
           "description": "Define additional components (e.g. from deps) with their props for validation and autocomplete."
