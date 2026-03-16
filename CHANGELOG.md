@@ -1,5 +1,17 @@
 # Changelog
 
+Here's the changelog entry for v0.4.8:
+
+```markdown
+## 0.4.8
+
+### Improvements
+
+- **Automated release workflow**: The `npm run release` command now uses Claude AI (Haiku) to auto-generate conventional commit messages from staged changes, replacing manual commit message writing.
+- **Improved changelog extraction**: Release notes extraction now handles multiple changelog header formats (`## 0.4.8`, `## [0.4.8]`, `## v0.4.8`) for more robust GitHub release creation.
+- **Fixed GitHub release creation**: The `postversion` script now correctly resolves the version number dynamically when creating GitHub releases.
+```
+
 Looking at the diff, the changes are:
 
 1. Removed explicit `activationEvents` from `package.json` (VS Code infers these automatically now)
