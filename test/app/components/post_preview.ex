@@ -3,7 +3,7 @@ defmodule Blog.Components.PostPreview do
 
   alias Hologram.UI.Link
 
-  prop :post, :map
+  prop(:post, :map)
 
   def template do
     ~HOLO"""

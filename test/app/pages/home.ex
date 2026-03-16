@@ -2,19 +2,43 @@ defmodule Blog.HomePage do
   use Hologram.Page
 
   alias Blog.Components.PostPreview
+  alias Blog.Components.PlacePreview
   alias Blog.Components.SearchBar
 
-  route "/"
-  layout Blog.MainLayout
+  route("/")
+  layout(Blog.MainLayout)
 
   def init(_params, component, _server) do
     posts = [
-      %{id: 1, title: "Getting Started with Hologram", excerpt: "Learn the basics of building apps with Hologram", likes: 12},
-      %{id: 2, title: "State Management in Hologram", excerpt: "Understanding client-side state and server commands", likes: 8},
-      %{id: 3, title: "Building Components", excerpt: "Create reusable UI components with props and slots", likes: 15}
+      %{
+        id: 1,
+        title: "Getting Started with Hologram",
+        excerpt: "Learn the basics of building apps with Hologram",
+        likes: 12
+      },
+      %{
+        id: 2,
+        title: "State Management in Hologram",
+        excerpt: "Understanding client-side state and server commands",
+        likes: 8
+      },
+      %{
+        id: 3,
+        title: "Building Components",
+        excerpt: "Create reusable UI components with props and slots",
+        likes: 15
+      }
     ]
 
-    put_state(component, :posts, posts)
+    places = [
+      %Place{id: 1, title: "Place 1"},
+      %Place{id: 2, title: "Place 2"},
+      %Place{id: 3, title: "Place 3"}
+    ]
+
+    component
+    |> put_state(:posts, posts)
+    |> put_state(:places, places)
   end
 
   def init(_params, component) do
@@ -35,6 +59,9 @@ defmodule Blog.HomePage do
       <div class="posts">
         {%for post <- @posts}
           <PostPreview post={post} />
+        {/for}
+        {%for post <- @places}
+          <PlacePreview post={post} />
         {/for}
       </div>
     </div>

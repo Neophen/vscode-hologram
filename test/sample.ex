@@ -1,7 +1,7 @@
 defmodule MyApp.Components.Counter do
   use Hologram.Component
 
-  prop :initial_count, :integer, default: 0
+  prop(:initial_count, :integer, default: 0)
 
   def init(_props, component, _server) do
     put_state(component, :count, 0)
@@ -53,7 +53,7 @@ end
 defmodule MyApp.Components.TodoCheckbox do
   use Hologram.Component
 
-  prop :todo, :map
+  prop(:todo, :map)
 
   def init(props, component, _server) do
     put_state(component, :todo, props.todo)
@@ -96,8 +96,8 @@ defmodule MyApp.Pages.Home do
   alias MyApp.Components.TodoCheckbox
   alias Hologram.UI.Link
 
-  route "/"
-  layout MyApp.Layouts.Main
+  route("/")
+  layout(MyApp.Layouts.Main)
 
   def init(_params, component, _server) do
     put_state(component, :title, "Home Page")
@@ -115,7 +115,7 @@ defmodule MyApp.Pages.Home do
     <div>
       <h1>{@title}</h1>
 
-      <SearchBar query={@search_query} $change="update_search" />
+      <SearchBar query={@search_query} $change="update_search" $click= />
 
       <div class="posts">
         {%for post <- @posts}
@@ -136,9 +136,9 @@ end
 defmodule MyApp.Pages.PostPage do
   use Hologram.Page
 
-  route "/posts/:id"
-  param :id, :integer
-  layout MyApp.Layouts.Main
+  route("/posts/:id")
+  param(:id, :integer)
+  layout(MyApp.Layouts.Main)
 
   def init(params, component, _server) do
     post = %{

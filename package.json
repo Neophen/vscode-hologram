@@ -23,7 +23,7 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "release": "npm version ${npm_config_bump:-patch} && git push && git push --tags"
+    "release": "npm version ${npm_config_bump:-patch} && git push && git push --tags && gh release create v$(node -p \"require('./package.json').version\") --generate-notes"
   },
   "devDependencies": {
     "@types/vscode": "^1.75.0",
@@ -46,6 +46,68 @@
             "Jump to the defmodule line"
           ],
           "description": "Default jump target when Cmd+clicking a component tag"
+        },
+        "hologram.eventTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Event name including the $ prefix (e.g. $click)"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description shown in the completion popup"
+              }
+            },
+            "required": ["name"]
+          },
+          "default": [
+            { "name": "$click", "description": "Triggered when an element is clicked" },
+            { "name": "$change", "description": "Triggered when the value of an input element changes" },
+            { "name": "$submit", "description": "Triggered when a form is submitted" },
+            { "name": "$select", "description": "Triggered when text is selected in an input or textarea" },
+            { "name": "$blur", "description": "Triggered when an element loses focus" },
+            { "name": "$focus", "description": "Triggered when an element receives focus" },
+            { "name": "$mouse_move", "description": "Triggered when the mouse cursor moves over an element" },
+            { "name": "$pointer_down", "description": "Triggered when a pointer is pressed down on an element" },
+            { "name": "$pointer_up", "description": "Triggered when a pointer is released from an element" },
+            { "name": "$pointer_move", "description": "Triggered when a pointer moves while over an element" },
+            { "name": "$pointer_cancel", "description": "Triggered when a pointer event is cancelled" },
+            { "name": "$transition_end", "description": "Triggered when a CSS transition has finished" },
+            { "name": "$transition_start", "description": "Triggered when a CSS transition has started" },
+            { "name": "$transition_run", "description": "Triggered when a CSS transition is created" },
+            { "name": "$transition_cancel", "description": "Triggered when a CSS transition is cancelled" }
+          ],
+          "description": "Hologram event types shown in autocomplete. Order determines sort priority. Add, remove, or reorder to match your usage."
+        },
+        "hologram.customComponents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "description": "Fully qualified module name (e.g. Hologram.UI.Link)"
+              },
+              "props": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "type": { "type": "string", "default": "any" },
+                    "required": { "type": "boolean", "default": false }
+                  },
+                  "required": ["name"]
+                }
+              }
+            },
+            "required": ["module", "props"]
+          },
+          "default": [],
+          "description": "Define additional components (e.g. from deps) with their props for validation and autocomplete."
         }
       }
     },

@@ -77,7 +77,7 @@ defmodule Blog.PostPage do
       </div>
 
       <div class="post-actions">
-        <LikeButton count={@post.likes} $click="like_post" />
+        <LikeButton count={@post.}  />
 
         <button $click="toggle_comments" class="comment-toggle">
           {%if @show_comments}
@@ -95,6 +95,7 @@ defmodule Blog.PostPage do
           new_comment={@new_comment}
           $change="update_comment"
           $submit="submit_comment"
+          $click=
         />
       {/if}
     </article>

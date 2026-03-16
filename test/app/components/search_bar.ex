@@ -1,8 +1,8 @@
 defmodule Blog.Components.SearchBar do
   use Hologram.Component
 
-  prop :query, :string, default: ""
-  prop :placeholder, :string, default: "Search posts..."
+  prop(:query, :string, default: "")
+  prop(:placeholder, :string, default: "Search posts...")
 
   def template do
     ~HOLO"""
@@ -13,6 +13,7 @@ defmodule Blog.Components.SearchBar do
         placeholder={@placeholder}
         $change="update_search"
       />
+
       {%if @query != ""}
         <button $click="clear_search" class="clear-btn">&times;</button>
       {/if}

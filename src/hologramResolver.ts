@@ -11,7 +11,8 @@ export type CursorContext =
   | { kind: 'action'; name: string }
   | { kind: 'component'; name: string }
   | { kind: 'function_call'; name: string }
-  | { kind: 'page'; name: string };
+  | { kind: 'page'; name: string }
+  | { kind: 'field_access'; varName: string; fieldName: string; name: string };
 
 export function getCursorContext(
   document: vscode.TextDocument,
@@ -19,6 +20,19 @@ export function getCursorContext(
 ): CursorContext | undefined {
   const line = document.lineAt(position.line).text;
   const char = position.character;
+
+  // 0. @variable.field — field access on a state/prop
+  const fieldAccessPattern = /@(\w+)\.(\w+)/g;
+  let fieldMatch: RegExpExecArray | null;
+  while ((fieldMatch = fieldAccessPattern.exec(line)) !== null) {
+    // Check if cursor is on the field part (after the dot)
+    const dotPos = fieldMatch.index + 1 + fieldMatch[1].length; // after @varName
+    const fieldStart = dotPos + 1; // after the .
+    const fieldEnd = fieldStart + fieldMatch[2].length;
+    if (char >= fieldStart && char <= fieldEnd) {
+      return { kind: 'field_access', varName: fieldMatch[1], fieldName: fieldMatch[2], name: fieldMatch[2] };
+    }
+  }
 
   // 1. @variable
   const varResult = matchAtPosition(line, char, /@(\w+)/g);
