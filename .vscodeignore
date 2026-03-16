@@ -1,7 +1,12 @@
 .vscode/**
+.claude/**
+.github/**
+.planning/**
 test/**
 src/**
 node_modules/**
 tsconfig.json
 .gitignore
+.tool-versions
+*.vsix
 CHANGELOG.md
