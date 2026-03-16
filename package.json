@@ -23,7 +23,7 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "release": "npm version ${npm_config_bump:-patch} && git push && git push --tags && gh release create v$(node -p \"require('./package.json').version\") --generate-notes"
+    "release": "npm version ${npm_config_bump:-patch} && git push && git push --tags && gh release create v$(node -p \"require('./package.json').version\") --notes-file CHANGELOG.md"
   },
   "devDependencies": {
     "@types/vscode": "^1.75.0",
