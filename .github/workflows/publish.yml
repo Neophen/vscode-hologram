@@ -30,3 +30,8 @@ jobs:
         run: npx ovsx publish *.vsix -p $OVSX_PAT
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
+
+      - name: Upload VSIX to release
+        run: gh release upload ${{ github.event.release.tag_name }} *.vsix --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

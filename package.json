@@ -17,14 +17,12 @@
     "Programming Languages"
   ],
   "main": "./out/extension.js",
-  "activationEvents": [
-    "onLanguage:hologram",
-    "onLanguage:elixir"
-  ],
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "release": "npm version ${npm_config_bump:-patch} && git push && git push --tags && gh release create v$(node -p \"require('./package.json').version\") --notes \"$(node scripts/extract-changelog.js)\""
+    "preversion": "npm run compile",
+    "version": "node scripts/generate-changelog.js && git add CHANGELOG.md",
+    "postversion": "git push && git push --tags && gh release create v$(node -p \"require('./package.json').version\") --notes \"$(node scripts/extract-changelog.js)\""
   },
   "devDependencies": {
     "@types/vscode": "^1.75.0",
