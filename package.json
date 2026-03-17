@@ -22,11 +22,14 @@
   "main": "./out/extension.js",
   "scripts": {
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "lint": "biome check src/",
+    "lint:fix": "biome check --fix src/"
   },
   "devDependencies": {
-    "@types/vscode": "^1.75.0",
+    "@biomejs/biome": "^2.4.7",
     "@types/node": "^20.0.0",
+    "@types/vscode": "^1.75.0",
     "@vscode/vsce": "^3.0.0",
     "ovsx": "^0.9.0",
     "typescript": "^5.0.0"
@@ -165,7 +168,7 @@
           "source.elixir"
         ],
         "embeddedLanguages": {
-          "source.hologram": "hologram"
+          "meta.embedded.hologram": "hologram"
         }
       }
     ]

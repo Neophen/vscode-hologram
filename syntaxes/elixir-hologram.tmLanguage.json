@@ -6,7 +6,7 @@
   "patterns": [
     {
       "comment": "~HOLO sigil with heredoc triple quotes",
-      "name": "text.html.hologram",
+      "name": "meta.embedded.hologram",
       "begin": "(~HOLO\"\"\")",
       "beginCaptures": {
         "1": { "name": "string.quoted.double.heredoc.elixir" }
@@ -21,7 +21,7 @@
     },
     {
       "comment": "~HOLO sigil with double quotes",
-      "name": "text.html.hologram",
+      "name": "meta.embedded.hologram",
       "begin": "(~HOLO\")",
       "beginCaptures": {
         "1": { "name": "string.quoted.double.elixir" }
@@ -36,7 +36,7 @@
     },
     {
       "comment": "~HOLO sigil with square brackets",
-      "name": "text.html.hologram",
+      "name": "meta.embedded.hologram",
       "begin": "(~HOLO\\[)",
       "beginCaptures": {
         "1": { "name": "string.quoted.other.elixir" }
@@ -51,7 +51,7 @@
     },
     {
       "comment": "~HOLO sigil with parentheses",
-      "name": "text.html.hologram",
+      "name": "meta.embedded.hologram",
       "begin": "(~HOLO\\()",
       "beginCaptures": {
         "1": { "name": "string.quoted.other.elixir" }
@@ -66,7 +66,7 @@
     },
     {
       "comment": "~HOLO sigil with curly braces (limited: nested braces inside will break matching)",
-      "name": "text.html.hologram",
+      "name": "meta.embedded.hologram",
       "begin": "(~HOLO\\{)",
       "beginCaptures": {
         "1": { "name": "string.quoted.other.elixir" }
