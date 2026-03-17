@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { findEnclosingModuleName, resolveComponentName } from './hologramResolver';
+import { findEnclosingModuleName, resolveComponentName } from './holoDevResolver';
 import { WorkspaceIndex } from './workspaceIndex';
 
 interface EventType {
@@ -26,7 +26,7 @@ const DEFAULT_EVENT_TYPES: EventType[] = [
 ];
 
 function getEventTypes(): EventType[] {
-  const config = vscode.workspace.getConfiguration('hologram');
+  const config = vscode.workspace.getConfiguration('holoDev');
   return config.get<EventType[]>('eventTypes', DEFAULT_EVENT_TYPES);
 }
 
@@ -102,7 +102,7 @@ function getCompletionContext(
   return null;
 }
 
-export class HologramEventCompletionProvider implements vscode.CompletionItemProvider {
+export class HoloDevEventCompletionProvider implements vscode.CompletionItemProvider {
   private outputChannel: vscode.OutputChannel;
   private index: WorkspaceIndex;
 

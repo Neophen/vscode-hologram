@@ -12,7 +12,7 @@ export class FieldCodeActionProvider implements vscode.CodeActionProvider {
     const actions: vscode.CodeAction[] = [];
 
     for (const diagnostic of context.diagnostics) {
-      if (diagnostic.source !== 'Hologram') continue;
+      if (diagnostic.source !== 'HoloDev') continue;
 
       switch (diagnostic.code) {
         case 'unknown-field':

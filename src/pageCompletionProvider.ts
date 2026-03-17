@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { resolveComponentName, findEnclosingModuleName } from './hologramResolver';
+import { resolveComponentName, findEnclosingModuleName } from './holoDevResolver';
 import { WorkspaceIndex, ModuleInfo } from './workspaceIndex';
 
 interface PageContext {
@@ -209,7 +209,7 @@ export class PageDiagnosticsProvider implements vscode.Disposable {
 
   constructor(_outputChannel: vscode.OutputChannel, index: WorkspaceIndex) {
     this.index = index;
-    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('hologram-pages');
+    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('holo-dev-pages');
 
     this.disposables.push(
       vscode.workspace.onDidSaveTextDocument(doc => this.checkDocument(doc)),
@@ -287,7 +287,7 @@ export class PageDiagnosticsProvider implements vscode.Disposable {
           message,
           vscode.DiagnosticSeverity.Warning
         );
-        diagnostic.source = 'Hologram';
+        diagnostic.source = 'HoloDev';
         diagnostic.code = 'unknown-page';
         diagnostics.push(diagnostic);
       }

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { resolveComponentName } from './hologramResolver';
+import { resolveComponentName } from './holoDevResolver';
 import { WorkspaceIndex, ModuleInfo } from './workspaceIndex';
 
 interface ComponentUsage {
@@ -66,7 +66,7 @@ export class ComponentPropsDiagnosticsProvider implements vscode.Disposable {
 
   constructor(_outputChannel: vscode.OutputChannel, index: WorkspaceIndex) {
     this.index = index;
-    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('hologram-component-props');
+    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('holo-dev-component-props');
 
     this.disposables.push(
       vscode.workspace.onDidChangeTextDocument(e => this.scheduleCheck(e.document)),
@@ -157,7 +157,7 @@ export class ComponentPropsDiagnosticsProvider implements vscode.Disposable {
             message,
             vscode.DiagnosticSeverity.Warning
           );
-          diagnostic.source = 'Hologram';
+          diagnostic.source = 'HoloDev';
           diagnostic.code = 'unknown-prop';
           diagnostics.push(diagnostic);
         }
@@ -177,7 +177,7 @@ export class ComponentPropsDiagnosticsProvider implements vscode.Disposable {
             `Missing required prop "${prop.name}" (${prop.type}) on <${usage.tagName}>.`,
             vscode.DiagnosticSeverity.Warning
           );
-          diagnostic.source = 'Hologram';
+          diagnostic.source = 'HoloDev';
           diagnostic.code = 'missing-prop';
           diagnostics.push(diagnostic);
         }

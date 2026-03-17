@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { WorkspaceIndex } from './workspaceIndex';
-import { HologramDefinitionProvider } from './definitionProvider';
-import { HologramEventCompletionProvider } from './eventCompletionProvider';
+import { HoloDevDefinitionProvider } from './definitionProvider';
+import { HoloDevEventCompletionProvider } from './eventCompletionProvider';
 import { PageCompletionProvider, PageDiagnosticsProvider } from './pageCompletionProvider';
 import { FieldDiagnosticsProvider } from './fieldDiagnosticsProvider';
 import { FieldCodeActionProvider } from './fieldCodeActionProvider';
@@ -23,14 +23,14 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.languages.registerDefinitionProvider(
       selector,
-      new HologramDefinitionProvider(index, outputChannel)
+      new HoloDevDefinitionProvider(index, outputChannel)
     )
   );
 
   context.subscriptions.push(
     vscode.languages.registerCompletionItemProvider(
       selector,
-      new HologramEventCompletionProvider(outputChannel, index),
+      new HoloDevEventCompletionProvider(outputChannel, index),
       '$', '=', '@', '.'
     )
   );

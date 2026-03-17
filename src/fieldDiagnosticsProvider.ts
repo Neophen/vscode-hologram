@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { resolveComponentName } from './hologramResolver';
+import { resolveComponentName } from './holoDevResolver';
 import { WorkspaceIndex } from './workspaceIndex';
 
 export class FieldDiagnosticsProvider implements vscode.Disposable {
@@ -10,7 +10,7 @@ export class FieldDiagnosticsProvider implements vscode.Disposable {
 
   constructor(_outputChannel: vscode.OutputChannel, index: WorkspaceIndex) {
     this.index = index;
-    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('hologram-fields');
+    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('holo-dev-fields');
 
     this.disposables.push(
       vscode.workspace.onDidChangeTextDocument(e => this.scheduleCheck(e.document)),
@@ -125,7 +125,7 @@ export class FieldDiagnosticsProvider implements vscode.Disposable {
           message,
           vscode.DiagnosticSeverity.Warning
         );
-        diagnostic.source = 'Hologram';
+        diagnostic.source = 'HoloDev';
         diagnostic.code = 'unknown-field';
         diagnostics.push(diagnostic);
       }

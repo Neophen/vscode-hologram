@@ -3,10 +3,10 @@ import {
   getCursorContext,
   findEnclosingModuleName,
   resolveComponentName,
-} from './hologramResolver';
+} from './holoDevResolver';
 import { WorkspaceIndex } from './workspaceIndex';
 
-export class HologramDefinitionProvider implements vscode.DefinitionProvider {
+export class HoloDevDefinitionProvider implements vscode.DefinitionProvider {
   private index: WorkspaceIndex;
   private outputChannel: vscode.OutputChannel;
 
@@ -79,7 +79,7 @@ export class HologramDefinitionProvider implements vscode.DefinitionProvider {
           return undefined;
         }
 
-        const config = vscode.workspace.getConfiguration('hologram');
+        const config = vscode.workspace.getConfiguration('holoDev');
         const target = config.get<string>('defaultJumpTarget', 'template');
 
         if (target === 'template' && mod.templateLine !== undefined) {

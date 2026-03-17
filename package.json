@@ -35,7 +35,7 @@
     "configuration": {
       "title": "Holo Dev - Unofficial Hologram Extension",
       "properties": {
-        "hologram.defaultJumpTarget": {
+        "holoDev.defaultJumpTarget": {
           "type": "string",
           "default": "template",
           "enum": [
@@ -50,7 +50,7 @@
           ],
           "description": "Default jump target when Cmd+clicking a component tag"
         },
-        "hologram.eventTypes": {
+        "holoDev.eventTypes": {
           "type": "array",
           "items": {
             "type": "object",

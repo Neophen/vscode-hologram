@@ -2,7 +2,7 @@
   <img src="assets/logo.png" alt="Hologram" width="128" />
 </p>
 
-# Hologram for VS Code
+# Holo Dev for VS Code
 
 [![Version](https://img.shields.io/visual-studio-marketplace/v/MDIS.holo-code?label=version)](https://marketplace.visualstudio.com/items?itemName=MDIS.holo-code)
 [![Installs](https://img.shields.io/visual-studio-marketplace/i/MDIS.holo-code)](https://marketplace.visualstudio.com/items?itemName=MDIS.holo-code)
@@ -14,11 +14,11 @@ Syntax highlighting, intelligent autocomplete, diagnostics, and Go to Definition
 
 ### VS Code
 
-Search for **"Hologram"** in the Extensions panel, or [install from Marketplace](https://marketplace.visualstudio.com/items?itemName=MDIS.holo-code).
+Search for **"Holo Dev"** in the Extensions panel, or [install from Marketplace](https://marketplace.visualstudio.com/items?itemName=MDIS.holo-code).
 
 ### Cursor / Open VSX
 
-Search for **"Hologram"** in Cursor's Extensions panel, or [install from Open VSX](https://open-vsx.org/extension/MDIS/holo-code).
+Search for **"Holo Dev"** in Cursor's Extensions panel, or [install from Open VSX](https://open-vsx.org/extension/MDIS/holo-code).
 
 ### Manual Install (VSIX)
 
@@ -125,14 +125,14 @@ Cmd+click (or Ctrl+click) navigation:
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| `hologram.defaultJumpTarget` | `template` | Where Cmd+click lands on component tags: `template`, `init`, or `module` |
-| `hologram.eventTypes` | All 15 event types | Configurable event type list for autocomplete. Order = sort priority. |
-| `hologram.customComponents` | `[]` | Define additional components from deps with their props for validation. |
+| `holoDev.defaultJumpTarget` | `template` | Where Cmd+click lands on component tags: `template`, `init`, or `module` |
+| `holoDev.eventTypes` | All 15 event types | Configurable event type list for autocomplete. Order = sort priority. |
+| `holoDev.customComponents` | `[]` | Define additional components from deps with their props for validation. |
 
 ### Custom Components Example
 
 ```json
-"hologram.customComponents": [
+"holoDev.customComponents": [
   {
     "module": "MyLib.Components.Button",
     "props": [
