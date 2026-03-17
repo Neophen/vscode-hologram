@@ -43,7 +43,7 @@
 
 - **"Hologram: Create Mix Tasks" command** (Cmd+Shift+P) — scaffolds `mix hologram.introspect` into your Elixir project for runtime introspection of pages, components, props, actions, and commands
 - **Watch mode** — run `mix hologram.introspect --watch` alongside `phx.server` to auto-update editor data on recompile
-- **`.hologram.json` file watcher** — extension picks up introspected data and merges it into the workspace index
+- **`.holo_dev/*.json` file watcher** — extension picks up introspected data and merges it into the workspace index
 
 ### Improvements
 

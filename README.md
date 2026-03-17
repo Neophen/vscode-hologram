@@ -37,25 +37,23 @@ For the **most accurate results** (especially in projects with custom `use` wrap
 
 ### Mix Introspection (Optional, Recommended)
 
-This scaffolds a Mix task into your Elixir project that introspects your compiled modules — giving the extension accurate data about pages, components, props, actions, commands, and Ash resource fields.
+The [`mdis_holo_dev`](https://github.com/Neophen/mdis_holo_dev) Elixir dependency provides a Mix task that introspects your compiled modules — giving the extension accurate data about pages, components, props, actions, commands, and Ash resource fields.
 
-1. Open Command Palette (`Cmd+Shift+P`)
-2. Run **"Hologram: Create Mix Tasks"**
-3. Choose **"Run once"** or **"Run in watch mode"**
-
-This creates `lib/mix/tasks/hologram.introspect.ex` in your project. You can run it manually:
+1. Add `{:mdis_holo_dev, "~> 0.1", only: :dev}` to your `mix.exs` deps
+2. Run `mix deps.get`
+3. Run the introspection task:
 
 ```bash
-# One-shot — generates .hologram.json
-mix hologram.introspect
+# One-shot — generates .holo_dev/*.json
+mix holo_dev.introspect
 
 # Watch mode — re-generates on recompile (run alongside phx.server)
-mix hologram.introspect --watch
+mix holo_dev.introspect --watch
 ```
 
-The extension watches `.hologram.json` and automatically picks up changes — no restart needed.
+The extension watches `.holo_dev/*.json` and automatically picks up changes — no restart needed.
 
-> `.hologram.json` is automatically added to your `.gitignore`.
+> `.holo_dev/` is automatically added to your `.gitignore`.
 
 ## Features
 

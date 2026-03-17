@@ -112,11 +112,11 @@ export class WorkspaceIndex implements vscode.Disposable {
       this.workspaceRoot = folders[0].uri;
     }
 
-    // Load existing .hologram/ files
+    // Load existing .holo_dev/ files
     await this.loadAllFiles();
 
-    // Watch .hologram/*.json for changes
-    const watcher = vscode.workspace.createFileSystemWatcher('**/.hologram/*.json');
+    // Watch .holo_dev/*.json for changes
+    const watcher = vscode.workspace.createFileSystemWatcher('**/.holo_dev/*.json');
     watcher.onDidCreate(uri => this.onJsonChanged(uri));
     watcher.onDidChange(uri => this.onJsonChanged(uri));
     watcher.onDidDelete(uri => this.onJsonDeleted(uri));
@@ -124,7 +124,7 @@ export class WorkspaceIndex implements vscode.Disposable {
   }
 
   private async loadAllFiles(): Promise<void> {
-    const files = await vscode.workspace.findFiles('.hologram/*.json', '**/node_modules/**');
+    const files = await vscode.workspace.findFiles('.holo_dev/*.json', '**/node_modules/**');
     for (const file of files) {
       await this.loadJsonFile(file);
     }
