@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.16
+
+### Improvements
+- Renamed extension to **HoloDev**
+- Added **Biome** code formatter integration
+- Refactored component and field provider architecture
+
 ## 0.4.15
 
 ### New Features
