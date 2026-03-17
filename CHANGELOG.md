@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.12
+
+### Improvements
+- Rebrand to **Holo Dev** with updated branding and repository references
+- Remove **Mix task scaffolder** command and related functionality
+
 ## 0.4.11
 
 ### Improvements
